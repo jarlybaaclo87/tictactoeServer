@@ -3,22 +3,14 @@ const app = express();
 const cors = require('cors');
 const PORT = process.env.PORT || 5000;
 
+const corsOptions = {
+    origin: 'https://cdpn.io', // Update origin to match your frontend origin
+    optionsSuccessStatus: 200
+  };
 
 app.use(express.json());
-
-const corsOptions = {
-    origin: function (origin, callback) {
-      // Replace this condition with your logic to allow or deny specific origins
-      if (origin === 'https://cdpn.io') {
-        callback(null, true);
-      } else {
-        callback(new Error('Not allowed by CORS'));
-      }
-    },
-    optionsSuccessStatus: 200 // Some legacy browsers (IE11, various SmartTVs) choke on 204
-  };
-  
-  app.use(cors(corsOptions));
+app.use(cors());
+app.use(cors(corsOptions));
 
 let currentPlayer = 'X';
 let board = Array(9).fill(null);
